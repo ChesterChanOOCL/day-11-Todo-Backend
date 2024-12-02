@@ -1,5 +1,6 @@
 package com.example.demo.TodoService;
 
+import com.example.demo.Exception.TodoNotFoundException;
 import com.example.demo.Model.Todo;
 import com.example.demo.TodoRepository.TodoRepository;
 import org.springframework.stereotype.Service;
@@ -26,15 +27,25 @@ public class TodoService {
         return todoRepository.save(todo);
     }
 
+    public Todo toggle(Integer id, Todo todo ){
+        if (todo == null) {
+            throw new TodoNotFoundException("Todo item not found");
+        }
+       todo.setDone(!todo.getDone());
+        return todoRepository.save(todo);
+    }
+
+
     public Todo update(Integer id, Todo todo)  {
         Todo existingTodo = todoRepository.findById(id).orElse(null);
-        System.out.println(id);
+
         if(existingTodo != null ){
             existingTodo.setText(todo.getText());
             existingTodo.setDone(todo.getDone());
             return todoRepository.save(existingTodo);
         }
-    return existingTodo;
+        System.out.println("Todo Service received id : "+id);
+    return todoRepository.save(existingTodo);
     }
 
 

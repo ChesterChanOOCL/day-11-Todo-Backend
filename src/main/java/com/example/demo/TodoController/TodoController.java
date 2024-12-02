@@ -1,10 +1,12 @@
 package com.example.demo.TodoController;
 
+import com.example.demo.Exception.TodoNotFoundException;
 import com.example.demo.TodoService.TodoService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.Model.Todo;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
@@ -29,10 +31,16 @@ public class TodoController {
         return todoService.create(todo);
     }
     @PutMapping("/{id}")
-    @ResponseStatus
+    @ResponseStatus(value = HttpStatus.OK)
     public Todo update(@PathVariable Integer id, @RequestBody Todo todo) {
+            return todoService.update(id, todo);
+    }
 
-        return todoService.update(id, todo);
+    @PutMapping("/toggle/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public Todo toggle(@PathVariable Integer id){
+        Todo todo = todoService.getTodoById(id);
+        return todoService.toggle(id, todo);
     }
 
     @DeleteMapping("/{id}")

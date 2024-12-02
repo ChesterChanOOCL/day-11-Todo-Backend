@@ -111,7 +111,7 @@ public class TodoControllerTest {
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
         final Todo createdTodo = todoJacksonTester.parseObject(result.getResponse().getContentAsString());
         assertThat(createdTodo.getText()).isEqualTo(newTodo.getText());
-//        assertThat(createdTodo.isDone()).isEqualTo(newTodo.isDone());
+        assertThat(createdTodo.getDone()).isEqualTo(newTodo.getDone());
     }
 
     @Test
@@ -131,7 +131,7 @@ public class TodoControllerTest {
         final Todo fetchedTodo = todoJacksonTester.parseObject(result.getResponse().getContentAsString());
         assertThat(fetchedTodo.getId()).isEqualTo(updatedTodo.getId());
         assertThat(fetchedTodo.getText()).isEqualTo(updatedTodo.getText());
-//        assertThat(fetchedTodo.isDone()).isEqualTo(updatedTodo.isDone());
+        assertThat(fetchedTodo.getDone()).isEqualTo(updatedTodo.getDone());
     }
 
     @Test
@@ -141,6 +141,6 @@ public class TodoControllerTest {
 
         // Then
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
-//        verify(todoService, times(1)).delete(1);
+
     }
 }
